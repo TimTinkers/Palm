@@ -12,6 +12,8 @@ An example ERC721 smart contract with opt-in centralized modification for suppor
 ## Trustless Economy
 
 ## References
+The following resources are important references for the concepts presented in this project:
+- [JavaScript Promises in Web3](http://shawntabrizi.com/crypto/making-web3-js-work-asynchronously-javascript-promises-await/), this article provides an overview on converting Web3 calls to Promises seamlessly.
 
 ## Supporting Projects
 I'd like to thank the following tools, frameworks, and projects which greatly supported the development of Palm:
