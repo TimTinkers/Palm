@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Palm Exchange</title>
+
+    <meta name="description" content="Palm">
+    <meta name="author" content="Tim Clancy">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="page-header">
+            <h1>
+              Palm <small>Dashboard</small>
+            </h1>
+          </div>
+
+          <div class="panel panel-default">
+            <h2>
+              GameExchange Assets
+            </h2>
+            You can view the exchange state <a href="https://ropsten.etherscan.io/address/0x5e469871e80474e231af5c252471b6d6817fc990">here</a>.
+
+            <div id="totalSizeFrom">
+              The exchange contains 0 assets in total.
+            </div>
+            
+            <div id="ownedTitleFrom">
+              You own the following assets:
+            </div>
+            <ul id="ownedListFrom" style="list-style-type:circle">
+            </ul>
+            
+            <input id="metadataInput" type="text">
+            <button id="mintButton">Mint New Asset</button>
+          </div>
+
+
+          <div class="panel panel-default">
+            <h2>
+              RivalExchange Assets
+            </h2>
+            You can view the exchange state <a href="https://ropsten.etherscan.io/address/0x09099905e4f5e8383ee33b843eeea014be4f8037">here</a> and the swap code <a href="https://ropsten.etherscan.io/address/0x6e6af08a1fa2fd0837dbdd01448c8ec36f63ec29">here</a>.
+
+            <div id="totalSizeTo">
+              The exchange contains 0 assets in total.
+            </div>
+            
+            <div id="ownedTitleTo">
+              You own the following assets:
+            </div>
+            <ul id="ownedListTo" style="list-style-type:circle">
+            </ul>
+
+            <input id="tokenInput" type="number">
+            <button id="approveButton">Approve Asset</button>
+            <button id="tradeButton">Trade Asset</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/scripts.js"></script>
+  </body>
+</html>
