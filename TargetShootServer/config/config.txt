@@ -1,0 +1,14 @@
+# The URL of the Ethereum node to connect to.
+nodeURL=
+
+# The private key of the wallet to pay transaction fees from.
+privateKey=
+
+# The public address of the example exchange contract on Ropsten.
+contractAddress=0x5E469871e80474E231af5C252471B6D6817FC990
+
+# The gas price in wei paid for transactions. Default is 22000000000.
+gasPrice=22000000000
+
+# The limit on amount of gas used during execution. Default is 4300000.
+gasLimit=4300000
