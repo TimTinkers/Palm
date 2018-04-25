@@ -63,6 +63,30 @@ var setup = async function (config) {
 		await promisify(cb => FromExchange.mint.sendTransaction(web3.eth.defaultAccount, metadataString, transactionData, cb));
 	});
 
+	// Allow the user to opt a token into server-controlled mutability.
+	$("#optInButton").click(async function() {
+		var tokenID = $("#optIdInput").val();
+		var gasLimit = await promisify(cb => FromExchange.optIn.estimateGas(tokenID, { from: web3.eth.defaultAccount }, cb));
+		var transactionData = {
+			from: web3.eth.defaultAccount,
+			gas: gasLimit,
+			gasPrice: 21000000000
+		};
+		await promisify(cb => FromExchange.optIn.sendTransaction(tokenID, transactionData, cb));
+	});
+
+	// Allow the user to opt a token out of server-controlled mutability.
+	$("#optOutButton").click(async function() {
+		var tokenID = $("#optIdInput").val();
+		var gasLimit = await promisify(cb => FromExchange.optOut.estimateGas(tokenID, { from: web3.eth.defaultAccount }, cb));
+		var transactionData = {
+			from: web3.eth.defaultAccount,
+			gas: gasLimit,
+			gasPrice: 21000000000
+		};
+		await promisify(cb => FromExchange.optOut.sendTransaction(tokenID, transactionData, cb));
+	});
+
 	// Assign functionality to the example approval button.
 	// Before the user can trigger a trade, they must approve interaction with the trade contract.
 	$("#approveButton").click(async function() {
@@ -89,7 +113,6 @@ var setup = async function (config) {
 	});
 
 	// Poll the exchanges every few seconds to update the dashboard.
-	// TODO: fix flickering bug.
 	var updateStatus = async function () {
 
 		// Update the display of total supply for each exchange.
@@ -100,28 +123,31 @@ var setup = async function (config) {
 
 		// Update the list of this user's assets on the "from" exchange.
 		var fromTokens = await promisify(cb => FromExchange.tokensOf(web3.eth.defaultAccount, cb));
-		$("#ownedListFrom").text("");
+		var updatedListFrom = $("<ul id=\"ownedListFrom\" style=\"list-style-type:circle\"></ul>");
 		for (var i = 0; i < fromTokens.length; i++) {
 			var tokenID = new web3.BigNumber(fromTokens[i]);
 			var metadataString = await promisify(cb => FromExchange.tokenMetadata(tokenID, cb));
+			var optStatus = await promisify(cb => FromExchange.getOptIn(tokenID, cb));
 
 			// Color the entry red if it's been approved for transfer.
 			var approvedAddress = await promisify(cb => FromExchange.approvedFor(tokenID, cb));
 			if (approvedAddress.toUpperCase() === config.swapAddress.toUpperCase()) {
-				$("#ownedListFrom").append("<li style=\"color:red;\">" + tokenID + ": " + metadataString + "</li>");
+				updatedListFrom.append("<li style=\"color:red;\">" + tokenID + ", opt-in=" + optStatus + ": " + metadataString + "</li>");
 			} else {
-				$("#ownedListFrom").append("<li>" + tokenID + ": " + metadataString + "</li>");
+				updatedListFrom.append("<li>" + tokenID + ", opt-in=" + optStatus + ": " + metadataString + "</li>");
 			}
 		}
+		$("#ownedListFrom").html(updatedListFrom.html());
 
 		// Update the list of this user's assets on the "to" exchange.
 		var toTokens = await promisify(cb => ToExchange.tokensOf(web3.eth.defaultAccount, cb));
-		$("#ownedListTo").text("");
+		var updatedListTo = $("<ul id=\"ownedListFrom\" style=\"list-style-type:circle\"></ul>");
 		for (var i = 0; i < toTokens.length; i++) {
 			var tokenID = new web3.BigNumber(toTokens[i]);
 			var metadataString = await promisify(cb => ToExchange.tokenMetadata(tokenID, cb));
-			$("#ownedListTo").append("<li>" + tokenID + ": " + metadataString + "</li>");
+			updatedListTo.append("<li>" + tokenID + ": " + metadataString + "</li>");
 		}
+		$("#ownedListTo").html(updatedListTo.html());
 	};
 	updateStatus();
 	setInterval(updateStatus, 5000);
