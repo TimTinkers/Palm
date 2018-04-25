@@ -7,7 +7,7 @@ Palm is the continuation of my work on [Galah](https://github.com/TimTinkers/Gal
   <img height="285" src="Media/GalahArchitecture.PNG"/>
 </p>
 
-An example ERC721 smart contract with opt-in centralized modification for supporting real-time blockchain-based video games.
+In keeping with the precedent set by Galah, I've named the project after a large Australian parrot.<sup>0</sup>
 
 ## Exchange Trust Model
 
@@ -31,14 +31,14 @@ Clearly, traditional servers are more appropriate than Ethereum for handling the
 
 ## References
 The following resources are important references for the information presented in this project:
-0. The Palm Cockatoo image is the work of [Dick Daniels](http://carolinabirds.org/), released [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
-1. [ERC-721](http://erc721.org/), a good primer on the developing Ethereum standard.
+0. The Palm Cockatoo image is the work of [Reg Mckenna](https://www.flickr.com/photos/whiskymac/), released [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/).
 1. [Valve Networking Guide](https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking), an excellent primer on multiplayer game networking with specifics for Valve titles.
 2. [Ethereum Transaction Rate](https://etherscan.io/chart/tx), as of 4/25/2018 the rate peaked at 1,349,890 transactions on 1/4/2018.
 3. [Battle Royale Tick Rates](https://www.youtube.com/watch?v=u0dWDFDUF8s), an analysis of the tick rates in several multiplayer games of the battle royale genre.
 
 ## Supporting Projects
 I'd like to thank the following guides, tools, and projects which greatly supported the development of Palm:
+- [ERC-721](http://erc721.org/), a good primer on the developing Ethereum standard.
 - [The Online ABI Encoding Tool by HashEx](https://abi.hashex.org/), to convert constructor parameters to ABI encoding for verification.
 - [Etherscan](etherscan.io), for providing an easy interface to validate deployment and contract state.
 - [JavaScript Promises in Web3](http://shawntabrizi.com/crypto/making-web3-js-work-asynchronously-javascript-promises-await/), this article provides an overview on converting Web3 calls to Promises seamlessly.
