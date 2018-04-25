@@ -402,3 +402,22 @@ contract GameExchange is DetailedERC721, ERC721Token {
     MetadataUpdated(ownerOf(_tokenId), _tokenId, _newMetadata);
   }
 }
+
+
+contract SwapAndBurn {
+
+  GameExchange swapFrom;
+  GameExchange swapTo;
+
+  function SwapAndBurn(address _fromTokenAddress, address _toTokenAddress) public {
+    swapFrom = GameExchange(_fromTokenAddress);
+    swapTo = GameExchange(_toTokenAddress);
+  }
+
+  function trade(uint256 _tokenId) public {
+    address tokenOwner = swapFrom.ownerOf(_tokenId);
+    swapFrom.takeOwnership(_tokenId);
+    swapFrom.burn(_tokenId);
+    swapTo.mint(tokenOwner, "redeemed");
+  }
+}

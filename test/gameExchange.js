@@ -24,7 +24,7 @@ const GameExchange = artifacts.require('GameExchange');
 // Test the exchange contract.
 // The addresses for testing are the game authority allowed to mint and modify 
 // records, and the player who can opt in and out of these modifications.
-contract('GameExchange', function ([ authority, player ]) {
+contract('GameExchange', function ([ authority, player, playerTwo ]) {
 
 	// Testing constants.
 	const ZERO = new BigNumber(0);
@@ -39,7 +39,7 @@ contract('GameExchange', function ([ authority, player ]) {
 	// Before executing each test case, create a new token 
 	// instance with the specified testing parameters.
 	beforeEach(async function () {
-		this.exchange = await GameExchange.new(authority);
+		this.exchange = await GameExchange.new("GameExchange", "GEX", authority);
 	});
 
 	// The exchange should start with no tokens.
@@ -170,5 +170,47 @@ contract('GameExchange', function ([ authority, player ]) {
 		// Verify exchange cannot opt itself into metadata modification.
 		await this.exchange.optIn(tokenID, { from: authority })
 			.should.be.rejectedWith(EVMRevert);
+	});
+
+	// Players cannot transfer tokens with the opt-in active.
+	it('Verify exchange cannot transfer opt-in tokens.', async function () {
+		
+		// Verify the exchange authority starts with no permission to a token.
+		await this.exchange.mint(player, "test", { from: authority })
+			.should.be.fulfilled;
+		var tokenID = (await this.exchange.tokensOf(player))[0];
+		var metadata = await this.exchange.tokenMetadata(tokenID);
+		var permission = await this.exchange.getOptIn.call(tokenID);
+		metadata.should.be.a('string').equal("test");
+		permission.should.be.false;
+
+		// Verify players can opt into metadata modification.
+		await this.exchange.optIn(tokenID, { from: player })
+			.should.be.fulfilled;
+		permission = await this.exchange.getOptIn.call(tokenID);
+		permission.should.be.true;
+
+		// Verify the player cannot transfer the token.
+		await this.exchange.transfer(playerTwo, tokenID, { from: player })
+			.should.be.rejectedWith(EVMRevert);
+
+		// Verify that once opted out the token can transfer.
+		await this.exchange.optOut(tokenID, { from: player })
+			.should.be.fulfilled;
+		permission = await this.exchange.getOptIn.call(tokenID);
+		permission.should.be.false;
+		await this.exchange.transfer(playerTwo, tokenID, { from: player })
+			.should.be.fulfilled;
+
+		// Verify transfer success.
+		var playerBalance = await this.exchange.balanceOf(player);
+		var playerTwoBalance = await this.exchange.balanceOf(playerTwo);
+		playerBalance.should.be.bignumber.equal(ZERO);
+		playerTwoBalance.should.be.bignumber.equal(ONE);
+		tokenID = (await this.exchange.tokensOf(playerTwo))[0];
+		metadata = await this.exchange.tokenMetadata(tokenID);
+		permission = await this.exchange.getOptIn.call(tokenID);
+		metadata.should.be.a('string').equal("test");
+		permission.should.be.false;
 	});
 });
