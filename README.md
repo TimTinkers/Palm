@@ -1,4 +1,12 @@
 # Palm
+
+Palm is the continuation of my work on [Galah](https://github.com/TimTinkers/Galah) to explore new and unique game development capabilities that integrating with the Ethereum blockchain can bring. Through the specific use of the [ERC-721](http://erc721.org/) standard for non-fungible assets, Palm considers just what can be accomplished with globally-available trustless game state.
+
+<p float="left">
+  <img width="285" height="285" src="Media/PalmCockatoo.jpg"/>
+  <img height="285" src="Media/GalahArchitecture.PNG"/>
+</p>
+
 An example ERC721 smart contract with opt-in centralized modification for supporting real-time blockchain-based video games.
 
 ## Exchange Trust Model
@@ -23,6 +31,8 @@ Clearly, traditional servers are more appropriate than Ethereum for handling the
 
 ## References
 The following resources are important references for the information presented in this project:
+0. The Palm Cockatoo image is the work of [Dick Daniels](http://carolinabirds.org/), released [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+1. [ERC-721](http://erc721.org/), a good primer on the developing Ethereum standard.
 1. [Valve Networking Guide](https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking), an excellent primer on multiplayer game networking with specifics for Valve titles.
 2. [Ethereum Transaction Rate](https://etherscan.io/chart/tx), as of 4/25/2018 the rate peaked at 1,349,890 transactions on 1/4/2018.
 3. [Battle Royale Tick Rates](https://www.youtube.com/watch?v=u0dWDFDUF8s), an analysis of the tick rates in several multiplayer games of the battle royale genre.
@@ -32,3 +42,10 @@ I'd like to thank the following guides, tools, and projects which greatly suppor
 - [The Online ABI Encoding Tool by HashEx](https://abi.hashex.org/), to convert constructor parameters to ABI encoding for verification.
 - [Etherscan](etherscan.io), for providing an easy interface to validate deployment and contract state.
 - [JavaScript Promises in Web3](http://shawntabrizi.com/crypto/making-web3-js-work-asynchronously-javascript-promises-await/), this article provides an overview on converting Web3 calls to Promises seamlessly.
+- [Truffle](https://github.com/trufflesuite/truffle), a development environment, testing framework and asset pipeline for Ethereum.
+- [Infura](https://infura.io/), a gateway for cloud-hosted Ethereum nodes.
+- [Web3j](https://web3j.io/), a lightweight, reactive, type-safe Java and Android library for integrating with nodes on Ethereum blockchains.
+- [LowEntry Socket Connection](https://www.unrealengine.com/marketplace/low-entry-socket-connection), a useful networking plugin for the Unreal Engine with native Java integration.
+- [json-simple](https://github.com/fangyidong/json-simple), a simple and fast JSON parser.
+- [solc-js](https://github.com/ethereum/solc-js), JavaScript Solidity compiler bindings used here to create the Java contract wrapper.
+- [Unreal Engine 4](https://www.unrealengine.com/en-US/blog), the Unreal Engine is a free high-quality game and physics engine.
