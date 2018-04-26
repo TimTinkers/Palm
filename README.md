@@ -61,15 +61,29 @@ Taking a look back at the web interface, we can see that the server authority ha
 |:-:|
 |The previous high score is retrievable from Ethereum and can be modified by the server when needed.|
 
-...
+The example above shows a player entering the game again for another match. Their previous high score persisted on the blockchain between their play attempts. In this gameplay clip, once the player surpasses their old high score, the gun object begins updating with the score value tracked on the remote centralized server. When the match ends, the newer high score is committed to the blockchain.
 
 |![The newer high-score and opting out.](Media/newer_highscore.gif)|
 |:-:|
 |Showing the even-higher high score from the second round, as well as the user opting-out.|
 
-To prevent assets from being modified without the buyer's knowledge or consent, players can only transfer assets which are opted-out of modification. This model allows the buyer to know for certain that whatever asset they purchase will be theirs in exactly the same state it was sold in. The edge-case where a buyer sees their recently-purchased record change because the seller is still playing with it has been handled.
+The player, satisfied with the high score of 19, chooses to opt out of object modification. This is a precautionary step to prevent the game authority from altering the player's high score on that gun object. In practice, because players must pay a small gas cost in transacting with Ethereum to opt into and out of object modification, likely player behavior will be to just fully trust the game authority to behave and remain opted in at all times.
 
-## Using Assets in Multiple Games
+The player might also be opting out in order to trade their gun object to someone. Exchanging objects actually requires the object to be opted out of modification. Palm has made this design decision in order to prevent sold objects from being modified without the buyer's consent; players can only transfer objects which are opted-out of modification. This model allows the buyer to know for certain that whatever object they purchase will be theirs in exactly the same state it was sold in. The edge-case where a buyer sees their recently-purchased item change because the seller is still playing with it has been handled.
+
+## Using Objects in Multiple Games
+
+One interesting use case of blockchain-based objects in games is the ability to seamlessly share objects between multiple games. One could imagine a situation where a player's [$28,000 of virtual hats](https://www.pcgamesn.com/tf2/28000-team-fortress-2-backpack) could be worn by characters across many different games. Player ownership of these collectable items becomes far more tangible: not only can they be made certifiably unique, but the objects also won't disappear even if the game they come from does. Their value can outlive the reason why they were originally purchased, and objects can find fresh life in newer titles.
+
+Blockchain-backed ERC-721 objects can also be used to represent a player's identity and statistics as they move from one game to another. Maybe a player's skill in _Counter-Strike_ automatically entitles them to a higher rank in the next _Battlefield_ game. This raises an especially important point: the ERC-721 objects can be used by multiple games even if they don't have the same development team or same access to the modification authority. That is, every developer has read-access to a game's objects and can use that in their own game, even if they are unable to write to the object.
+
+|![An entirely different game using the same gun object.](Media/guessing_game.gif)|
+|:-:|
+|An entirely different game without modification authority can read objects from other games.|
+
+In the [GuessingGame](https://github.com/TimTinkers/Palm/tree/master/GuessingGame) folder, Palm includes a simple Java game which communicates with the deployed GameExchange contract. The guessing game generates a random number between 0 and 100 and the player has a limited number of guesses to find the number. The player is given notice if they guess near the actual number.
+
+The guessing game is not a modifying authority to the TargetShootProject's gun objects. The guessing game does, however, use its read access to pull the player's high score from one of their player-specified owned gun objects. The number of guesses a player is given is equal to the high score they were able to achieve with their chosen guessing gun. While this is an extremely simple example, it does show what kind of interesting cross-game interactions can emerge from using this standard.
 
 ## Trustless Economy
 
@@ -88,6 +102,7 @@ The following resources are important references for the information presented i
 7. [Ethereum Transaction Rate](https://etherscan.io/chart/tx), as of 4/25/2018 the rate peaked at 1,349,890 transactions on 1/4/2018.
 8. [Battle Royale Tick Rates](https://www.youtube.com/watch?v=u0dWDFDUF8s), an analysis of the tick rates in several multiplayer games of the battle royale genre.
 9. [Gaffer On Games](https://gafferongames.com/post/what_every_programmer_needs_to_know_about_game_networking/), an authority on the importance and details of authoritative game networking.
+10. [Expensive Team Fortress 2 Backpack](https://www.pcgamesn.com/tf2/28000-team-fortress-2-backpack), real money accrues in game objects, like $28k of virtual hats.
 
 ## Supporting Projects
 I'd like to thank the following guides, tools, and projects which greatly supported the development of Palm:
