@@ -87,9 +87,39 @@ The guessing game is not a modifying authority to the TargetShootProject's gun o
 
 ## Trustless Economy
 
-["GameExchange"](https://ropsten.etherscan.io/address/0x5e469871e80474e231af5c252471b6d6817fc990)
-["RivalExchange"](https://ropsten.etherscan.io/address/0x09099905e4f5e8383ee33b843eeea014be4f8037)
-["SwapAndBurn"](https://ropsten.etherscan.io/address/0x6e6af08a1fa2fd0837dbdd01448c8ec36f63ec29)
+Given how commonplace microtransactions are in modern games, it is clear that game developers want to monetize their in-game economies to produce an additional source of revenue. Developers want to do so in a manner which is guaranteed to be tamper-proof.
+
+In-game currencies are prone to abuse when players exploit unknown bugs. Electronic Arts' failure to secure the in-game currency of their _FIFA_ series allowed it to be freely duplicated by players. One player, Ricky Miller, was actually prosecuted and plead guilty to conspiracy to commit fraud after [duplicating $16M worth of FIFA coins](https://www.theregister.co.uk/2017/05/02/video_game_hacker_probation/).<sup>11</sup> In the face of concerted effort by players to exploit bugs in a game's trading and currency system, developers are incentivized to use a blockchain like Ethereum for its proven security.
+
+Another concern for game developers where valuable virtual items are involved is legal liability surrounding what players choose to do with those objects on your platform. Valve Corporation, for example, briefly had to deal with lawsuits regarding [illegal skin gambling](https://esportsobserver.com/class-action-lawsuit-blaming-valve-illegal-skin-gambling-refiled-district-court/) on their platform. In their popular game _Counter-Strike: Global Offensive_, players can decorate their weapons with colorful "skins." Some of these skins are extremely rare and valuable. Players were using the in-game trading functionality to gamble valuable skins on the outcome of professional _Counter-Strike_ matches.<sup>12</sup> Valve's liability concerns were how responsible they were for the illegal activity of players using their trade platform.
+
+For developers using a public blockchain like Ethereum as the platform for executing all transfers of in-game objects between players, the liability concerns seem diminished _(Tim Clancy is not a lawyer)_. If players choose to gamble with the ERC-721 records from your game, you have no way to stop them. They could build out their own infrastructure on Ethereum and the gambling behavior would exist in a format that you provably have no control over.
+
+## Interactions in the Trustless Economy
+
+This section of the project observes the possible interactions between ERC-721 object exchanges for two competing games. It deals specifically with two instances of the GameExchange contract deployed live to the Ropsten test network, ["GameExchange"](https://ropsten.etherscan.io/address/0x5e469871e80474e231af5c252471b6d6817fc990) and ["RivalExchange"](https://ropsten.etherscan.io/address/0x09099905e4f5e8383ee33b843eeea014be4f8037). The destruction of objects from one exchange in facilitating the creation of objects on another is handled by the [deployed "SwapAndBurn"](https://ropsten.etherscan.io/address/0x6e6af08a1fa2fd0837dbdd01448c8ec36f63ec29) contract whose source is available [here](https://github.com/TimTinkers/Palm/blob/master/GameExchangeContract/contracts/SwapAndBurn.sol).
+
+|![Two exchanges.](Media/trade1.png)|![Minting object.](Media/trade2.png)|![Confirming mint.](Media/trade3.png)|
+|:-:|:-:|:-:|
+|Two exchanges.|Minting object.|Confirming mint.|
+
+...
+
+|![Object minted.](Media/trade4.png)|![Requesting approval.](Media/trade5.png)|
+|:-:|:-:|
+|Object minted.|Requesting approval.|
+
+...
+
+|![Approval successful.](Media/trade6.png)|![Requesting trade.](Media/trade7.png)|![Trade successful.](Media/trade8.png)|
+|:-:|:-:|:-:|
+|Approval successful.|Requesting trade.|Trade successful.|
+
+...
+
+## Conclusion
+
+...
 
 ## References
 The following resources are important references for the information presented in this project:
@@ -103,6 +133,8 @@ The following resources are important references for the information presented i
 8. [Battle Royale Tick Rates](https://www.youtube.com/watch?v=u0dWDFDUF8s), an analysis of the tick rates in several multiplayer games of the battle royale genre.
 9. [Gaffer On Games](https://gafferongames.com/post/what_every_programmer_needs_to_know_about_game_networking/), an authority on the importance and details of authoritative game networking.
 10. [Expensive Team Fortress 2 Backpack](https://www.pcgamesn.com/tf2/28000-team-fortress-2-backpack), real money accrues in game objects, like $28k of virtual hats.
+11. [FIFA Coin Heist](https://www.theregister.co.uk/2017/05/02/video_game_hacker_probation/), a group reverse-engineered enough of FIFA to exploit a currency-duplication bug.
+12. [Valve Skin Gambling](https://esportsobserver.com/class-action-lawsuit-blaming-valve-illegal-skin-gambling-refiled-district-court/), Valve faced some lawsuits regarding players illegally gambling using their in-game objects.
 
 ## Supporting Projects
 I'd like to thank the following guides, tools, and projects which greatly supported the development of Palm:
