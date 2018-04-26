@@ -55,7 +55,7 @@ After 30 seconds, the round ends and the server sees if the player has set a new
   <img src="Media/new_highscore.PNG"/>
 </p>
 
-...
+Taking a look back at the web interface, we can see that the server authority has modified the player's gun object to include the new high score. While this simple game trusts the client, in practice the game server would exist [separately from the client](https://gafferongames.com/post/what_every_programmer_needs_to_know_about_game_networking/) as a remote authority. The game authority would modify the player's gun object from a separate machine with separately signed transactions, preventing players from cheating.<sup>9</sup>
 
 |![The previous high score is saved, and the new one can overwrite it.](Media/score_updated.gif)|
 |:-:|
@@ -87,6 +87,7 @@ The following resources are important references for the information presented i
 6. [Valve Networking Guide](https://developer.valvesoftware.com/wiki/Source_Multiplayer_Networking), an excellent primer on multiplayer game networking with specifics for Valve titles.
 7. [Ethereum Transaction Rate](https://etherscan.io/chart/tx), as of 4/25/2018 the rate peaked at 1,349,890 transactions on 1/4/2018.
 8. [Battle Royale Tick Rates](https://www.youtube.com/watch?v=u0dWDFDUF8s), an analysis of the tick rates in several multiplayer games of the battle royale genre.
+9. [Gaffer On Games](https://gafferongames.com/post/what_every_programmer_needs_to_know_about_game_networking/), an authority on the importance and details of authoritative game networking.
 
 ## Supporting Projects
 I'd like to thank the following guides, tools, and projects which greatly supported the development of Palm:
