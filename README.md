@@ -9,6 +9,10 @@ Palm is the continuation of my work on [Galah](https://github.com/TimTinkers/Gal
 
 In keeping with the precedent set by Galah, I've named the project after a large Australian parrot.<sup>1</sup>
 
+## Motivation
+
+
+
 ## Exchange Trust Model
 
 Typically, real-time video games simulate their world using a fixed simulation timestep known as the "tick rate." For example, Valve Corporation's popular multiplayer first-person shooter _Counter-Strike: Source_ supports servers with a tick rate of 66Hz.<sup>2</sup> That is, the game servers update state 66 times per second. Game logic, physics simulations, and player input signals are all processed in frequent, discrete time quanta. These state updates are decoupled from the client-side rendering frame rate, allowing for smooth rendering to be maintained across a variety of tick rates.
@@ -23,13 +27,19 @@ Clearly, traditional servers are more appropriate than Ethereum for handling the
 |:-:|
 |A hybrid trust model similar to a cryptocurrency exchange can overcome many scalability issues.|
 
-The solution that Palm explores is a hybrid trust model where players can opt into and out of asset modification from a centralized authority under the control of a game's developers. What this means is...
+The contracts, web server, and interface shown used in the following demonstration are available in the [GameExchangeContract](https://github.com/TimTinkers/Palm/tree/master/GameExchangeContract) folder of this repository. The interface shown above is a simple page using [web3.js](https://github.com/ethereum/web3.js/) to read state from and interact with a deployed instance of my [GameExchange](https://github.com/TimTinkers/Palm/blob/master/GameExchangeContract/contracts/GameExchange.sol) contract.
+
+The solution that Palm explores is a hybrid trust model where players can opt into and out of asset modification from a centralized authority under the control of a game's developers. Instead of a game interacting with a player's on-chain records in real time, the game can track state changes off-chain on a traditional server. Updates are only committed to the blockchain periodically.
+
+This model is very similar to how large cryptocurrency exchanges operate: when you own your cryptocoins on an exchange, you typically don't own them on-chain. Instead, the off-chain cryptocoin accounting is centralized entirely on the exchange's servers. This model suffers from centralization in that users don't actually fully own their coins until withdrawing from the exchange to another wallet. However, the model benefits from being able to update its off-chain reckoning of state quicker and cheaper than interacting with the blockchain would allow.
+
+When the player opts to remove their assets
 
 |![An example game.](Media/gameplay.gif)|
 |:-:|
 |Palm's example game is a simple shooting gallery where the player's high-scoring gun is tokenized.|
 
-...
+The server tracks the player's score and updates the player's record when the match ends if they've broken their high score.
 
 <p align="center">
   <img src="Media/new_highscore.PNG"/>
@@ -67,6 +77,7 @@ The following resources are important references for the information presented i
 ## Supporting Projects
 I'd like to thank the following guides, tools, and projects which greatly supported the development of Palm:
 - [ERC-721](http://erc721.org/), a good primer on the developing Ethereum standard.
+- [Ethereum JavaScript API](https://github.com/ethereum/web3.js/), web3.js provides the wrappers needed to integrate with smart contracts on the web interface.
 - [The Online ABI Encoding Tool by HashEx](https://abi.hashex.org/), to convert constructor parameters to ABI encoding for verification.
 - [Etherscan](etherscan.io), for providing an easy interface to validate deployment and contract state.
 - [JavaScript Promises in Web3](http://shawntabrizi.com/crypto/making-web3-js-work-asynchronously-javascript-promises-await/), this article provides an overview on converting Web3 calls to Promises seamlessly.
