@@ -97,29 +97,33 @@ For developers using a public blockchain like Ethereum as the platform for execu
 
 ## Interactions in the Trustless Economy
 
-This section of the project observes the possible interactions between ERC-721 object exchanges for two competing games. It deals specifically with two instances of the GameExchange contract deployed live to the Ropsten test network, ["GameExchange"](https://ropsten.etherscan.io/address/0x5e469871e80474e231af5c252471b6d6817fc990) and ["RivalExchange"](https://ropsten.etherscan.io/address/0x09099905e4f5e8383ee33b843eeea014be4f8037). The destruction of objects from one exchange in facilitating the creation of objects on another is handled by the [deployed "SwapAndBurn"](https://ropsten.etherscan.io/address/0x6e6af08a1fa2fd0837dbdd01448c8ec36f63ec29) contract whose source is available [here](https://github.com/TimTinkers/Palm/blob/master/GameExchangeContract/contracts/SwapAndBurn.sol).
+This section of the project observes the possible interactions between ERC-721 object exchanges for two competing games. It deals specifically with two instances of the GameExchange contract deployed live to the Ropsten test network, ["GameExchange"](https://ropsten.etherscan.io/address/0x5e469871e80474e231af5c252471b6d6817fc990) and ["RivalExchange"](https://ropsten.etherscan.io/address/0x09099905e4f5e8383ee33b843eeea014be4f8037). The destruction of objects from one exchange in facilitating the creation of objects on another is handled by the [deployed "SwapAndBurn"](https://ropsten.etherscan.io/address/0x6e6af08a1fa2fd0837dbdd01448c8ec36f63ec29) contract whose source is available [here](https://github.com/TimTinkers/Palm/blob/master/GameExchangeContract/contracts/SwapAndBurn.sol). The goal is to demonstrate how developers from one exchange can interfere with objects on another exchange.
+
+In this scenario, developers from team A operate "GameExchange" and serve objects for their game. Developers from team B setup "RivalExchange," another ERC-721 object registry, and want to entice users away from team A's game. To that end, team B sets up the "SwapAndBurn" contract. This contract allows a player on team A's "GameExchange" to destroy one of their objects in return for a free object on team B's "RivalExchange." Team B hopes that by encouraging team A's players to destroy their objects, they can disrupt the gameplay or economy surrounding team A's game.
 
 |![Two exchanges.](Media/trade1.png)|![Minting object.](Media/trade2.png)|![Confirming mint.](Media/trade3.png)|
 |:-:|:-:|:-:|
-|Two exchanges.|Minting object.|Confirming mint.|
+|Two exchanges.|Minting object.|Confirming mint using MetaMask: I am locally the exchange authority.|
 
-...
+The stills above show the process of requesting that a new object be minted on the first "GameExchange" exchange. After specifying the desired metadata, issuing the minting transaction is handled by [MetaMask](https://metamask.io/). Currently I am just freely minting an object for myself, but it is conceivable that developers would put this sort of functionality behind a storefront whereby the player is only given a newly-minted object after paying.
 
 |![Object minted.](Media/trade4.png)|![Requesting approval.](Media/trade5.png)|
 |:-:|:-:|
-|Object minted.|Requesting approval.|
+|Object minted.|Requesting approval on the object with a token ID of 2.|
 
-...
+After the object has been successfully minted, we can see the new listing under the "GameExchange" as a token with ID of 2 and metadata of "Second test asset!" Its name is colored black, as opposed to red for the previously-existing token 0, because it has not been approved for the [deployed "SwapAndBurn"](https://ropsten.etherscan.io/address/0x6e6af08a1fa2fd0837dbdd01448c8ec36f63ec29) contract to take ownership of. The user who owns token 2 must specifically request that "SwapAndBurn" be approved to take ownership later.
+
+This explicit approval step is necessary because the "SwapAndBurn" contract must be allowed to take an object away from the player and destroy it before issuing the player a new token on "RivalExchange." The player can verify through inspection of the SwapAndBurn contract that there is no risk to this approval step: there is no way by which the SwapAndBurn contract can take ownership over the player's object without also issuing them their new "RivalExchange" object.
 
 |![Approval successful.](Media/trade6.png)|![Requesting trade.](Media/trade7.png)|![Trade successful.](Media/trade8.png)|
 |:-:|:-:|:-:|
-|Approval successful.|Requesting trade.|Trade successful.|
+|Approval successful.|Requesting a trade on the object with a token ID of 2.|Trade successful.|
 
-...
+The approval step succeeded, as indicated by token 2's listing turning red. Next, the player requests the trade from "SwapAndBurn." This function takes ownership of token 2 as it was approved to do, burns token 2, and then issues a new object to the player. The final still shows that this is successfully the case: "GameExchange" has permanently lost an object while the player has redeemed the newly-minted "RivalExchange" token with ID of 1.
 
 ## Conclusion
 
-...
+There are countless creative ways to apply smart contracts and the Ethereum blockchain to the realm of video game development. Blockchains provide developers with an avenue for persistent data storage, secure trade platforms, and a new avenue to monetize content. The use of a standarized ERC-721 object enables unprecedented cross-game interactions. Games can interact with each other's data even among different development teams. Ethereum is empowering game developers, and Palm has barely scratched the surface.
 
 ## References
 The following resources are important references for the information presented in this project:
@@ -144,6 +148,7 @@ I'd like to thank the following guides, tools, and projects which greatly suppor
 - [The Online ABI Encoding Tool by HashEx](https://abi.hashex.org/), to convert constructor parameters to ABI encoding for verification.
 - [Etherscan](etherscan.io), for providing an easy interface to validate deployment and contract state.
 - [JavaScript Promises in Web3](http://shawntabrizi.com/crypto/making-web3-js-work-asynchronously-javascript-promises-await/), this article provides an overview on converting Web3 calls to Promises seamlessly.
+- [MetaMask](https://metamask.io/), a browser add-on which lets one interact with Ethereum without a full node.
 - [Truffle](https://github.com/trufflesuite/truffle), a development environment, testing framework and asset pipeline for Ethereum.
 - [Infura](https://infura.io/), a gateway for cloud-hosted Ethereum nodes.
 - [Web3j](https://web3j.io/), a lightweight, reactive, type-safe Java and Android library for integrating with nodes on Ethereum blockchains.
