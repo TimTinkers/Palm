@@ -39,7 +39,7 @@ The solution that Palm explores is a hybrid trust model where players can opt in
 
 This model is very similar to how large cryptocurrency exchanges operate: when users hold cryptocoins on an exchange, they typically don't own them on-chain. Instead, the off-chain cryptocoin accounting is centralized entirely on the exchange's servers. This model suffers from centralization in that users don't actually fully own their coins until withdrawing from the exchange to another wallet. However, the model benefits from being able to update its off-chain reckoning of state quicker and cheaper than interacting with the blockchain would allow.
 
-While the player has an object opted into modification, they are consciously trusting the game authority to manage state updates to that object appropriately. A malicious or faulty game authority could manipulate the metadata of the object such that it destroys whatever value the object might have held. A malicious cryptocurrency exchange could steal coins in much the same fashion. When the player opts an object out of modification, they lock its state such that not even the game authority can manipulate it.
+When the player opts an object into modification, as they are shown doing above, they are consciously trusting the game authority to manage state updates to that object appropriately. A malicious or faulty game authority could manipulate the metadata of the object such that it destroys whatever value the object might have held. A malicious cryptocurrency exchange could steal coins in much the same fashion. When the player opts an object out of modification, they lock its state such that not even the game authority can manipulate it.
 
 |![An example game.](Media/gameplay.gif)|
 |:-:|
@@ -47,7 +47,9 @@ While the player has an object opted into modification, they are consciously tru
 
 To demonstrate this model in action, Palm includes a simple game which tracks a player's high scores per gun as ERC-721 objects. The game includes a client built in the Unreal Engine and a separate Java server for interacting with the exchange contracts. The Unreal Engine client assets are available in the [TargetShootProject](https://github.com/TimTinkers/Palm/tree/master/TargetShootProject) folder of this repository. The Java server is available in the [TargetShootServer](https://github.com/TimTinkers/Palm/tree/master/TargetShootServer) folder.
 
-The server tracks the player's score and updates the player's record when the match ends if they've broken their high score.
+The player is locked to a small shooting area and given a gun. The gun displays its all-time high score, which is recorded in a corresponding ERC-721 record. After the player shoots the red cube to trigger the start of a match, they have 30 seconds to shoot as many red popup figures as they can while avoiding green figures. The server tracks the player's score and updates the gun's display when new high scores are achieved.
+
+After 30 seconds, the round ends and the server sees if the player has set a new record. Only then is the player's gun object, if they have opted for object modification, updated with the new high score. During the course of a match, all communication is directly between the Unreal Engine and the Java server. The gas and time costs of transacting with the blockchain are avoided until the player is done playing.
 
 <p align="center">
   <img src="Media/new_highscore.PNG"/>
