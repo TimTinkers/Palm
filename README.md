@@ -143,6 +143,7 @@ The following resources are important references for the information presented i
 ## Supporting Projects
 I'd like to thank the following guides, tools, and projects which greatly supported the development of Palm:
 - [ERC-721](http://erc721.org/), a good primer on the developing Ethereum standard.
+- [OpenZeppelin](https://github.com/OpenZeppelin/openzeppelin-solidity), community-produced Solidity developer resources with a proven history of success.
 - [Unreal Engine 4](https://www.unrealengine.com/en-US/blog), the Unreal Engine is a free high-quality game and physics engine.
 - [Ethereum JavaScript API](https://github.com/ethereum/web3.js/), web3.js provides the wrappers needed to integrate with smart contracts on the web interface.
 - [The Online ABI Encoding Tool by HashEx](https://abi.hashex.org/), to convert constructor parameters to ABI encoding for verification.
@@ -155,3 +156,4 @@ I'd like to thank the following guides, tools, and projects which greatly suppor
 - [LowEntry Socket Connection](https://www.unrealengine.com/marketplace/low-entry-socket-connection), a useful networking plugin for the Unreal Engine with native Java integration.
 - [json-simple](https://github.com/fangyidong/json-simple), a simple and fast JSON parser.
 - [solc-js](https://github.com/ethereum/solc-js), JavaScript Solidity compiler bindings used here to create the Java contract wrapper.
+- The generous support of the Berkman Fund for Undergraduate Innovation at Penn Engineering.
